@@ -28,7 +28,7 @@ const thoughtController = {
     async updateThought(req, res) {
         try {
             const thoughtData = await Thought.findOneAndUpdate(
-                { _id: req.paramgs.thoughtId },
+                { _id: req.params.thoughtId },
                 { $set: req.body },
                 { runValidators: true, new: true }
             );
@@ -62,4 +62,42 @@ const thoughtController = {
             res.status(500).json(error);
         }
     },
+    async createReaction(req, res) {
+        try {
+            const thoughtData = await Thought.findOneAndUpdate(
+                { _id: req.params.thoughtId },
+                { $push: { reactions: req.body } },
+                { runValidators: true, new: true }
+            );
+            if (!thoughtData) {
+                return res.status(404).json({
+                    message: 'Thought doesn\'t exist'
+                });
+            }
+            res.json(thoughtData);
+        } catch (error) {
+            console.error(error);
+            res.status(500).json(error);
+        }
+    },
+    async deleteReaction(req, res) {
+        try {
+            const thoughtData = await Thought.findOneAndUpdate(
+                { _id: req.params.thoughtId },
+                { $pull: { reactions: { reactionId: req.params.reactionId } } },
+                { new: true }
+            );
+            if (!thoughtData) {
+                return res.status(404).json({
+                    message: 'Thought doesn\'t exist'
+                });
+            }
+            res.json(thoughtData);
+        } catch (error) {
+            console.error(error);
+            res.status(500).json(error);
+        }
+    },
 };
+
+module.exports = thoughtController;
