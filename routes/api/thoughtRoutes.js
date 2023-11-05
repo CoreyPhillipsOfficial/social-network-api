@@ -22,6 +22,7 @@ const {
 const {
     findUserById,
     updateUser,
+    deleteUser,
     addFriend,
     removeFriend,
 } = require('../../controllers/userController');
