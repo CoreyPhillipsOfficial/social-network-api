@@ -3,7 +3,7 @@ const { User, Thought } = require('../models');
 const thoughtController = {
     async findAllThoughts(req, res) {
         try {
-            const thoughtData = await Thought.find().select('__v');
+            const thoughtData = await Thought.find();
             res.json(thoughtData);
         } catch (error) {
             console.error(error);
