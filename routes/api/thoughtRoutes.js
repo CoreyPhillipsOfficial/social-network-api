@@ -1,14 +1,4 @@
 const router = require('express').Router();
-// const {
-//     findAllThoughts,
-//     createThought,
-//     updateThought,
-//     deleteThought,
-//     findUserById,
-//     updateUser,
-//     addFriend,
-//     removeFriend,
-// } = require('../../controllers');
 
 const {
     findAllThoughts,
@@ -30,4 +20,7 @@ const {
 router.route("/").get(findAllThoughts).post(createThought);
 router.route("/:userId").get(findUserById).put(updateUser).delete(deleteUser);
 router.route("/:userId/friends/:friendId").post(addFriend).delete(removeFriend);
+router.route('/:thoughtId/reactions').post(createReaction);
+router.route('/:thoughtId/reactions/:reactionId').delete(deleteReaction);
+
 module.exports = router;
